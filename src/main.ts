@@ -18,7 +18,7 @@ const canvas = new p5((p: p5) => {
     p.createCanvas(400, 400);
   };
 
-  const nowPos = () => {
+  const getPos = () => {
     const x = Math.floor(p.mouseX / 30);
     const y = Math.floor(p.mouseY / 30);
 
@@ -27,9 +27,9 @@ const canvas = new p5((p: p5) => {
 
   // return false: erase, true: draw
   const setGridImage = (pos?: { x: number; y: number }, clear?: boolean) => {
-    const { x, y } = pos ?? nowPos();
+    const { x, y } = pos ?? getPos();
 
-    if (clear === true) {
+    if (clear || gridContents[x]?.[y]) {
       if (gridContents[x]?.[y]) {
         delete gridContents[x][y];
       }
@@ -52,7 +52,7 @@ const canvas = new p5((p: p5) => {
   };
 
   p.mouseDragged = () => {
-    const pos = nowPos();
+    const pos = getPos();
     if (nowPressMoveBuffers[pos.str]) return;
 
     setGridImage(pos, !firstIsDraw);
