@@ -30,7 +30,7 @@ const canvas = new p5((p: p5) => {
     const { x, y } = pos ?? nowPos();
 
     if (clear === true) {
-      if (gridContents[x]?.[y] !== undefined) {
+      if (gridContents[x]?.[y]) {
         delete gridContents[x][y];
       }
 
