@@ -5,6 +5,7 @@ export default class Controls {
   viewPos: IViewPos = {
     prevX: null,
     prevY: null,
+    isDragged: false,
     isDragging: false,
   };
 
@@ -17,8 +18,11 @@ export default class Controls {
   }
 
   mouseDragged({ clientX, clientY }: MouseEvent) {
-    const { prevX, prevY, isDragging } = this.viewPos;
+    const { prevX, prevY, isDragging, isDragged } = this.viewPos;
     if (!isDragging) return;
+    if (!isDragged) {
+      this.viewPos.isDragged = true;
+    }
 
     const dx = clientX - (prevX ?? 0);
     const dy = clientY - (prevY ?? 0);
@@ -32,9 +36,10 @@ export default class Controls {
   }
 
   mouseReleased() {
-    this.viewPos.isDragging = false;
     this.viewPos.prevX = null;
     this.viewPos.prevY = null;
+    this.viewPos.isDragged = false;
+    this.viewPos.isDragging = false;
   }
 
   worldZoom({ x, y, deltaY, factor = 0.05 }: IZoomInfo) {
@@ -60,4 +65,5 @@ export interface IViewPos {
   prevX: number | null;
   prevY: number | null;
   isDragging: boolean;
+  isDragged: boolean;
 }
