@@ -8,7 +8,6 @@ export const BLOCK_NAMES = [
   'barrel',
 
   //block
-  'air',
   'glasst',
   'glassw',
   'glazedterracotta',

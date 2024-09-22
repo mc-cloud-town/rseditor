@@ -2,20 +2,28 @@ import './style.css';
 import p5 from 'p5';
 
 import Controls from './utils/Controls';
-import { BLOCK_NAMES } from './utils/Images';
+import { BLOCK_NAMES, TBlockName } from './utils/Images';
 
 const IMAGE_MAP = new Map();
 
 new p5((p5: p5) => {
-  let selectedBlock = BLOCK_NAMES[0];
+  let selectedBlock: TBlockName = BLOCK_NAMES[0];
   const gridContents: {
     [x: number]: { [y: number]: string | undefined } | undefined;
   } = {};
   const controls = new Controls(p5);
+  const blockEl = document.getElementById('blocks')! as HTMLDivElement;
 
   p5.setup = () => {
     const size = getWindowSize();
     const canvas = p5.createCanvas(size.width, size.height);
+    BLOCK_NAMES.forEach((block) => {
+      const image = document.createElement('img');
+      image.src = `assets/${block}.webp`;
+      image.classList.add('block');
+      image.addEventListener('click', () => (selectedBlock = block));
+      blockEl.appendChild(image);
+    });
 
     BLOCK_NAMES.forEach((e) => {
       IMAGE_MAP.set(e, p5.loadImage(`assets/${e}.webp`));
